@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CPAP"
+             x:Class="CPAP.MainPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <Label x:Name="currentSongName"
+               Grid.Row="0"
+               Grid.Column="0"
+               Grid.ColumnSpan="5"/>
+
+        <Label x:Name="currentSongTime"
+               Grid.Row="1"
+               Grid.Column="0"
+               Grid.ColumnSpan="2"
+               HorizontalOptions="Center"
+               Text="-:--"
+               FontSize="Large"/>
+
+        <Button x:Name="previousButton"
+                Grid.Row="5"
+                Grid.Column="0"
+                IsEnabled="False"
+                Text="Prev"
+                Clicked="previousButton_Clicked"/>
+
+        <Button x:Name="stopButton"
+                Grid.Row="5"
+                Grid.Column="1"
+                IsEnabled="False"
+                Text="Stop"
+                Clicked="stopButton_Clicked"/>
+
+        <Button x:Name="playButton"
+                Grid.Row="5"
+                Grid.Column="2"
+                IsEnabled="False"
+                Text="Play"
+                Clicked="playButton_Clicked"/>
+
+        <Button x:Name="nextButton"
+                Grid.Row="5"
+                Grid.Column="3"
+                IsEnabled="False"
+                Text="Next"
+                Clicked="nextButton_Clicked"/>
+
+        <Button x:Name="songButton"
+                Grid.Row="5"
+                Grid.Column="4"
+                Text="&#9833;"
+                FontSize="Large"
+                Clicked="songButton_Clicked"/>
+    </Grid>
+</ContentPage>
