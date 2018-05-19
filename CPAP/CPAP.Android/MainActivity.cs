@@ -25,6 +25,7 @@ namespace CPAP.Droid
             {
                 RequestPermissions(new string[] { Android.Manifest.Permission.ReadExternalStorage }, 0);
             }
+            Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
         }
 
         protected override void OnStop()

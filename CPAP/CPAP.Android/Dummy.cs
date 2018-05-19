@@ -10,12 +10,12 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-[assembly: Xamarin.Forms.Dependency (typeof (CPAP.IDirectoryPicker))]
+[assembly: Xamarin.Forms.Dependency (typeof (CPAP.Droid.Dummy))]
 namespace CPAP.Droid
 {
     class Dummy : IDirectoryPicker
     {
-        // to coś istnieje tylko po to, żeby DependencyService nie umarł na UWP
+        // to coś istnieje tylko po to, żeby DependencyService nie umarł
         public string UWPDirectory => throw new NotImplementedException();
 
         public void PickDirectory()

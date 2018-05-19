@@ -6,7 +6,6 @@ namespace CPAP
 {
     public interface IDirectoryPicker
     {
-        string UWPDirectory { get; }
-        void PickDirectory();
+        string PickDirectory();
     }
 }

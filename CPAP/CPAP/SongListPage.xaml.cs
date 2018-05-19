@@ -76,8 +76,7 @@ namespace CPAP
         private string Format(string path)
         {
             string[] splitPath = path.Split('/');
-            path = splitPath[splitPath.Length - 1];
-            return path;
+            return splitPath[splitPath.Length - 1];
         }
 
         private async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -101,8 +100,8 @@ namespace CPAP
             else if (Device.RuntimePlatform == Device.UWP)
             {
                 System.Diagnostics.Debug.WriteLine("HALO DZIEŃ DOBRY, MY PO FOLDERY");
-                DependencyService.Get<IDirectoryPicker>().PickDirectory();
-                MusicFilesDirectory = DependencyService.Get<IDirectoryPicker>().UWPDirectory;
+                IDirectoryPicker picker = DependencyService.Get<IDirectoryPicker>();
+                MusicFilesDirectory = picker.PickDirectory();
                 GetFiles();
             }
         }

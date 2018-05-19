@@ -20,7 +20,6 @@ namespace CPAP
             InitializeComponent();
             _songList = new SongListPage(this);
             _audioPlayer = new AudioPlayer();
-            SetUpEvents();
         }
 
         public void UpdateData()
@@ -34,10 +33,19 @@ namespace CPAP
 
         public void EnableButtons()
         {
+            if (playButton.IsEnabled)
+                return;
+
             playButton.IsEnabled = true;
             previousButton.IsEnabled = true;
             nextButton.IsEnabled = true;
             stopButton.IsEnabled = true;
+        }
+
+        public void Play()
+        {
+            _audioPlayer.Play();
+            StartPlaybackTimer();
         }
 
         public void Reset()
@@ -47,18 +55,23 @@ namespace CPAP
             currentSongTime.Text = "-:--";
         }
 
-        private void SetUpEvents()
+        private void StartPlaybackTimer()
         {
             Device.StartTimer(new TimeSpan(0, 0, 1), () =>
             {
-                currentSongTime.Text = _audioPlayer.UpdatePlaybackTimer();
-                return true;
+                if (_audioPlayer.IsPlaying)
+                {
+                    currentSongTime.Text = _audioPlayer.UpdatePlaybackTimer();
+                    return true;
+                }
+                else
+                    return false;
             });
         }
 
         private void playButton_Clicked(object sender, EventArgs args)
         {
-            _audioPlayer.Play();
+            Play();
         }
 
         private void stopButton_Clicked(object sender, EventArgs args)
@@ -71,14 +84,14 @@ namespace CPAP
         {
             _audioPlayer.Stop();
             _songList.PreviousTrack();
-            _audioPlayer.Play();
+            Play();
         }
 
         private void nextButton_Clicked(object sender, EventArgs args)
         {
             _audioPlayer.Stop();
             _songList.NextTrack();
-            _audioPlayer.Play();
+            Play();
         }
 
         private async void songButton_Clicked(object sender, EventArgs args)
