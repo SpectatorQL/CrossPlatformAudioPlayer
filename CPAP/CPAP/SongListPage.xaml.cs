@@ -99,10 +99,9 @@ namespace CPAP
             }
             else if (Device.RuntimePlatform == Device.UWP)
             {
-                System.Diagnostics.Debug.WriteLine("HALO DZIEŃ DOBRY, MY PO FOLDERY");
                 IDirectoryPicker picker = DependencyService.Get<IDirectoryPicker>();
-                MusicFilesDirectory = picker.PickDirectory();
-                GetFiles();
+                await picker.PickDirectory();
+                MyListView.ItemsSource = picker.MusicFiles;
             }
         }
     }

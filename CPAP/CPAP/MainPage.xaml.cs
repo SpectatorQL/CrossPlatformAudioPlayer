@@ -19,7 +19,11 @@ namespace CPAP
         {
             InitializeComponent();
             _songList = new SongListPage(this);
+#if WINDOWS_UWP
+            _audioPlayer = new AudioPlayerUWP();
+#else
             _audioPlayer = new AudioPlayer();
+#endif
         }
 
         public void UpdateData()

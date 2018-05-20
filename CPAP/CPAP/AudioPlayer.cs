@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Plugin.SimpleAudioPlayer;
 
@@ -7,7 +8,7 @@ namespace CPAP
 {
     class AudioPlayer
     {
-        ISimpleAudioPlayer _player;
+        protected ISimpleAudioPlayer _player;
 
         public MusicFile CurrentSong { get; set; }
         public double CurrentPosition { get; }
@@ -21,11 +22,11 @@ namespace CPAP
             _player = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
         }
 
-        public void Play()
+        public virtual void Play()
         {
             if (!_player.IsPlaying)
             {
-                using (System.IO.FileStream audioStream = new System.IO.FileStream(CurrentSong.Path, System.IO.FileMode.Open))
+                using (FileStream audioStream = new FileStream(CurrentSong.Path, FileMode.Open))
                 {
                     _player.Load(audioStream);
                 }
@@ -37,7 +38,7 @@ namespace CPAP
             }
         }
 
-        public void Stop()
+        public virtual void Stop()
         {
             _player.Stop();
         }
@@ -47,7 +48,7 @@ namespace CPAP
             return FormatTime(_player.CurrentPosition);
         }
 
-        private string FormatTime(double time)
+        protected string FormatTime(double time)
         {
             string timeString;
 
