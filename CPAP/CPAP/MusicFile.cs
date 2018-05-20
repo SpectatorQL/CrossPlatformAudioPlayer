@@ -7,6 +7,8 @@ namespace CPAP
 {
     public class MusicFile
     {
+        bool _addRefSuccess;
+
         public string Path { get; }
         public string Name { get; set; }
         public SafeFileHandle FileHandle { get; set; }
@@ -22,6 +24,12 @@ namespace CPAP
             Path = path;
             Name = name;
             FileHandle = handle;
+            FileHandle.DangerousAddRef(ref _addRefSuccess);
+        }
+
+        ~MusicFile()
+        {
+            FileHandle.DangerousRelease();
         }
     }
 }

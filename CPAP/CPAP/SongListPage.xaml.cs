@@ -101,7 +101,8 @@ namespace CPAP
             {
                 IDirectoryPicker picker = DependencyService.Get<IDirectoryPicker>();
                 await picker.PickDirectory();
-                MyListView.ItemsSource = picker.MusicFiles;
+                _musicFiles = picker.MusicFiles;
+                MyListView.ItemsSource = _musicFiles;
             }
         }
     }

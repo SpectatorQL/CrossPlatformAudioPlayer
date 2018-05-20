@@ -13,25 +13,33 @@ namespace CPAP
 
         public override void Play()
         {
-            if (!_player.IsPlaying)
+            try
             {
-                if (_audioStream != null)
-                    _audioStream.Close();
+                if (!_player.IsPlaying)
+                {
+                    if (_audioStream != null)
+                        _audioStream.Dispose();
 
-                _audioStream = new FileStream(CurrentSong.FileHandle, FileAccess.Read);
-                _player.Load(_audioStream);
-                _player.Play();
+                    System.Diagnostics.Debug.WriteLine(CurrentSong.FileHandle.IsClosed.ToString());
+                    _audioStream = new FileStream(CurrentSong.FileHandle, FileAccess.Read);
+                    _player.Load(_audioStream);
+                    _player.Play();
+                }
+                else
+                {
+                    _player.Pause();
+                }
             }
-            else
+            catch (Exception e)
             {
-                _player.Pause();
+                System.Diagnostics.Debug.WriteLine(e.InnerException + " " + e.Message + " " + e.GetType().ToString());
+                throw e;
             }
         }
 
         public override void Stop()
         {
             base.Stop();
-            _audioStream.Close();
         }
     }
 }
