@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Win32.SafeHandles;
+﻿using Microsoft.Win32.SafeHandles;
 
 namespace CPAP
 {
@@ -10,8 +7,8 @@ namespace CPAP
         bool _addRefSuccess;
 
         public string Path { get; }
-        public string Name { get; set; }
-        public SafeFileHandle FileHandle { get; set; }
+        public string Name { get; }
+        public SafeFileHandle FileHandle { get; }
 
         public MusicFile(string path, string name)
         {

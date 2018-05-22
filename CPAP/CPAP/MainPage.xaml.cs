@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
-using Plugin.SimpleAudioPlayer;
 
 namespace CPAP
 {
@@ -100,6 +95,11 @@ namespace CPAP
         private async void songButton_Clicked(object sender, EventArgs args)
         {
             await Navigation.PushAsync(_songList);
+        }
+
+        private void volumeSlider_ValueChanged(object sender, EventArgs args)
+        {
+            _audioPlayer.Volume = volumeSlider.Value;
         }
     }
 }

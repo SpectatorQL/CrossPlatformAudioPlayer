@@ -40,7 +40,14 @@ namespace CPAP.UWP
             IReadOnlyList<StorageFile> files = await _folder.GetFilesAsync();
             foreach (var file in files)
             {
-                MusicFiles.Add(new MusicFile(file.Path, file.Name, file.CreateSafeFileHandle(FileAccess.Read)));
+                if (file.FileType == ".mp3" || file.FileType == ".wav")
+                {
+                    MusicFiles.Add(new MusicFile(
+                        file.Path,
+                        file.Name.Remove(file.Name.LastIndexOf('.')),
+                        file.CreateSafeFileHandle(FileAccess.Read)
+                        ));
+                }
             }
         }
     }

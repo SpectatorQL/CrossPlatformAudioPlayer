@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -45,8 +43,6 @@ namespace CPAP
                 MusicFile previousTrack = _musicFiles.ElementAt(i - 1);
                 _parent.CurrentSong = previousTrack;
             }
-            // Nie chce mi sie implementować świrowania z indeksami i sprawdzaniem,
-            // a to coś działa just fine.
             catch (ArgumentOutOfRangeException) { }
             catch (NullReferenceException) { }
             finally
@@ -63,20 +59,12 @@ namespace CPAP
                 MusicFile nextTrack = _musicFiles.ElementAt(i + 1);
                 _parent.CurrentSong = nextTrack;
             }
-            // Nie chce mi sie implementować świrowania z indeksami i sprawdzaniem,
-            // a to coś działa just fine.
             catch (ArgumentOutOfRangeException) { }
             catch (NullReferenceException) { }
             finally
             {
                 _parent.UpdateData();
             }
-        }
-
-        private string Format(string path)
-        {
-            string[] splitPath = path.Split('/');
-            return splitPath[splitPath.Length - 1];
         }
 
         private async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -101,7 +89,7 @@ namespace CPAP
             {
                 IDirectoryPicker picker = DependencyService.Get<IDirectoryPicker>();
                 await picker.PickDirectory();
-                _musicFiles = picker.MusicFiles;
+                _musicFiles = new ObservableCollection<MusicFile>(picker.MusicFiles.OrderBy(file => file.Name));
                 MyListView.ItemsSource = _musicFiles;
             }
         }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.IO;
-using System.Text;
-using Xamarin.Forms;
+using System.Linq;
 
 namespace CPAP
 {
@@ -23,7 +21,7 @@ namespace CPAP
                 files.Add(new MusicFile(i, Path.GetFileNameWithoutExtension(i)));
             }
 
-            return files;
+            return new ObservableCollection<MusicFile>(files.OrderBy(file => file.Name));
         }
     }
 }

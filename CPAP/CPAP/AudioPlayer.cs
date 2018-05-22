@@ -12,6 +12,10 @@ namespace CPAP
 
         public MusicFile CurrentSong { get; set; }
         public double CurrentPosition { get; }
+        public double Volume
+        {
+            set { _player.Volume = value; }
+        }
         public bool IsPlaying
         {
             get { return _player.IsPlaying; }

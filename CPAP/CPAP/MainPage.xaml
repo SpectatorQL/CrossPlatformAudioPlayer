@@ -6,8 +6,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="48"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -23,17 +23,27 @@
 
 
         <Label x:Name="currentSongName"
+               Margin="8"
                Grid.Row="0"
                Grid.Column="0"
                Grid.ColumnSpan="5"/>
 
         <Label x:Name="currentSongTime"
+               Margin="8"
+               HorizontalOptions="Start"
                Grid.Row="1"
                Grid.Column="0"
-               Grid.ColumnSpan="2"
-               HorizontalOptions="Center"
                Text="-:--"
-               FontSize="Large"/>
+               FontSize="Medium"/>
+
+        <Slider x:Name="volumeSlider"
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                Maximum="1"
+                Minimum="0"
+                Value="0.5"
+                ValueChanged="volumeSlider_ValueChanged"/>
 
         <Button x:Name="previousButton"
                 Grid.Row="5"

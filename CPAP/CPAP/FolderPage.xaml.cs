@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace CPAP
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class FolderPage : ContentPage
 	{
         SongListPage _parent;
@@ -46,7 +42,7 @@ namespace CPAP
 
         private void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            ListView listView = sender as ListView;
+            var listView = sender as ListView;
             GoToDirectory(listView.SelectedItem.ToString());
             listView.SelectedItem = null;
         }
