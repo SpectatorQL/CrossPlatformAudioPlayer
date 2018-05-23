@@ -3,27 +3,38 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
 
-[assembly: Xamarin.Forms.Dependency (typeof (CPAP.UWP.DirectoryPicker))]
+[assembly: Xamarin.Forms.Dependency(typeof(CPAP.UWP.DirectoryPicker))]
 namespace CPAP.UWP
 {
     class DirectoryPicker : IDirectoryPicker
     {
-        private StorageFolder _folder;
+        StorageFolder _folder;
 
-        public ObservableCollection<MusicFile> MusicFiles { get; private set; }
-
-        public DirectoryPicker()
+        public async Task<ObservableCollection<MusicFile>> GetFilesWithHandles()
         {
-            MusicFiles = new ObservableCollection<MusicFile>();
+            await PickDirectory();
+            IReadOnlyList<StorageFile> files = await _folder.GetFilesAsync();
+            ObservableCollection<MusicFile> musicFiles = new ObservableCollection<MusicFile>();
+            foreach (var file in files)
+            {
+                if (file.FileType == ".mp3" || file.FileType == ".wav")
+                {
+                    musicFiles.Add(new MusicFile(
+                        file.Path,
+                        file.Name.Remove(file.Name.LastIndexOf('.')),
+                        file.CreateSafeFileHandle(FileAccess.Read)
+                        ));
+                }
+            }
+            return new ObservableCollection<MusicFile>(musicFiles.OrderBy(file => file.Name));
         }
 
-        public async Task PickDirectory()
+        private async Task PickDirectory()
         {
             FolderPicker _folderPicker = new FolderPicker()
             {
@@ -32,23 +43,6 @@ namespace CPAP.UWP
             _folderPicker.FileTypeFilter.Add("*");
             _folder = await _folderPicker.PickSingleFolderAsync();
             StorageApplicationPermissions.FutureAccessList.Add(_folder);
-            await GetFilesWithHandles();
-        }
-
-        private async Task GetFilesWithHandles()
-        {
-            IReadOnlyList<StorageFile> files = await _folder.GetFilesAsync();
-            foreach (var file in files)
-            {
-                if (file.FileType == ".mp3" || file.FileType == ".wav")
-                {
-                    MusicFiles.Add(new MusicFile(
-                        file.Path,
-                        file.Name.Remove(file.Name.LastIndexOf('.')),
-                        file.CreateSafeFileHandle(FileAccess.Read)
-                        ));
-                }
-            }
         }
     }
 }

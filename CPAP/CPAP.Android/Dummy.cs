@@ -18,11 +18,6 @@ namespace CPAP.Droid
     // To coś istnieje tylko po to, żeby DependencyService nie umarł
     class Dummy : IDirectoryPicker
     {
-        public ObservableCollection<MusicFile> MusicFiles => throw new NotImplementedException();
-
-        public async Task PickDirectory()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<ObservableCollection<MusicFile>> GetFilesWithHandles() => throw new NotImplementedException();
     }
 }

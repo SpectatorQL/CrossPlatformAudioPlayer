@@ -5,7 +5,6 @@ namespace CPAP
 {
     public interface IDirectoryPicker
     {
-        ObservableCollection<MusicFile> MusicFiles { get; }
-        Task PickDirectory();
+        Task<ObservableCollection<MusicFile>> GetFilesWithHandles();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -26,13 +27,18 @@ namespace CPAP
         public async void GetFiles()
         {
             _musicFiles = _fileGetter.GetMusicFiles(MusicFilesDirectory);
+            await Validate();
+            MyListView.ItemsSource = _musicFiles;
+        }
+        
+        private async Task Validate()
+        {
             if (_musicFiles == null || _musicFiles.Count == 0)
             {
                 _parent.Reset();
                 _parent.CurrentSong = null;
                 await DisplayAlert("No files!", "It looks like you chose a wrong directory.", "OK");
             }
-            MyListView.ItemsSource = _musicFiles;
         }
 
         public void PreviousTrack()
@@ -88,8 +94,8 @@ namespace CPAP
             else if (Device.RuntimePlatform == Device.UWP)
             {
                 IDirectoryPicker picker = DependencyService.Get<IDirectoryPicker>();
-                await picker.PickDirectory();
-                _musicFiles = new ObservableCollection<MusicFile>(picker.MusicFiles.OrderBy(file => file.Name));
+                _musicFiles = await picker.GetFilesWithHandles();
+                await Validate();
                 MyListView.ItemsSource = _musicFiles;
             }
         }
