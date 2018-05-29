@@ -26,7 +26,7 @@ namespace CPAP.UWP
                 {
                     musicFiles.Add(new MusicFile(
                         file.Path,
-                        file.Name.Remove(file.Name.LastIndexOf('.')),
+                        Path.GetFileNameWithoutExtension(file.Path),
                         file.CreateSafeFileHandle(FileAccess.Read)
                         ));
                 }
