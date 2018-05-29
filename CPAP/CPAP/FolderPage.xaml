@@ -39,7 +39,7 @@
             <Button x:Name="backButton"
                     Grid.Row="2"
                     Grid.Column="0"
-                    Text="Back"
+                    Text="..."
                     Clicked="backButton_Clicked"/>
             
             <Button x:Name="selectButton"

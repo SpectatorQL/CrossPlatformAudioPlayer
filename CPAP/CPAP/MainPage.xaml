@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:CPAP"
-             x:Class="CPAP.MainPage">
+             x:Class="CPAP.MainPage"
+             Title="CrossPlatformAudioPlayer">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -21,12 +22,12 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-
         <Label x:Name="currentSongName"
                Margin="8"
                Grid.Row="0"
                Grid.Column="0"
-               Grid.ColumnSpan="5"/>
+               Grid.ColumnSpan="5"
+               FontSize="Medium"/>
 
         <Label x:Name="currentSongTime"
                Margin="8"
@@ -36,48 +37,62 @@
                Text="-:--"
                FontSize="Medium"/>
 
+        <Label Grid.Row="4"
+               Grid.Column="0"
+               Margin="8"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Text="&#128266;"
+               FontSize="Large"/>
+
         <Slider x:Name="volumeSlider"
                 Grid.Row="4"
-                Grid.Column="0"
-                Grid.ColumnSpan="5"
+                Grid.Column="1"
+                Grid.ColumnSpan="4"
+                Margin="8"
+                VerticalOptions="Center"
                 Maximum="1"
                 Minimum="0"
-                Value="0.5"
+                Value="1"
                 ValueChanged="volumeSlider_ValueChanged"/>
 
         <Button x:Name="previousButton"
                 Grid.Row="5"
                 Grid.Column="0"
                 IsEnabled="False"
-                Text="Prev"
+                Text="&#9665;&#9665;"
+                FontSize="28"
                 Clicked="previousButton_Clicked"/>
 
         <Button x:Name="stopButton"
                 Grid.Row="5"
                 Grid.Column="1"
                 IsEnabled="False"
-                Text="Stop"
+                Text="&#9633;"
+                FontSize="28"
                 Clicked="stopButton_Clicked"/>
 
         <Button x:Name="playButton"
                 Grid.Row="5"
                 Grid.Column="2"
                 IsEnabled="False"
-                Text="Play"
+                Text="&#9655;"
+                FontSize="28"
                 Clicked="playButton_Clicked"/>
 
         <Button x:Name="nextButton"
                 Grid.Row="5"
                 Grid.Column="3"
                 IsEnabled="False"
-                Text="Next"
+                Text="&#9655;&#9655;"
+                FontSize="28"
                 Clicked="nextButton_Clicked"/>
 
         <Button x:Name="songButton"
                 Grid.Row="5"
                 Grid.Column="4"
                 Text="&#9833;"
-                FontSize="Large"
+                FontSize="28"
                 Clicked="songButton_Clicked"/>
     </Grid>
 </ContentPage>
