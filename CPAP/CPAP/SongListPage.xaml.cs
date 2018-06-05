@@ -24,18 +24,23 @@ namespace CPAP
             _fileGetter = new FileGetter();
         }
 
-        public async void GetFiles()
+        public void GetFiles()
         {
             _musicFiles = _fileGetter.GetMusicFiles(MusicFilesDirectory);
-            await Validate();
+            Validate();
+            SetFiles();
+        }
+
+        private void SetFiles()
+        {
             MyListView.ItemsSource = _musicFiles;
+            _parent.CurrentSong = _musicFiles.ElementAt(0);
         }
         
-        private async Task Validate()
+        private async void Validate()
         {
             if (_musicFiles == null || _musicFiles.Count == 0)
             {
-                _parent.Reset();
                 _parent.CurrentSong = null;
                 await DisplayAlert("No files!", "It looks like you chose a wrong directory.", "OK");
             }
@@ -49,8 +54,10 @@ namespace CPAP
                 MusicFile previousTrack = _musicFiles.ElementAt(i - 1);
                 _parent.CurrentSong = previousTrack;
             }
-            catch (ArgumentOutOfRangeException) { }
-            catch (NullReferenceException) { }
+            catch (ArgumentOutOfRangeException)
+            {
+                // No action is necessary. Playing is stopped without any side effects
+            }
             finally
             {
                 _parent.UpdateData();
@@ -65,8 +72,10 @@ namespace CPAP
                 MusicFile nextTrack = _musicFiles.ElementAt(i + 1);
                 _parent.CurrentSong = nextTrack;
             }
-            catch (ArgumentOutOfRangeException) { }
-            catch (NullReferenceException) { }
+            catch (ArgumentOutOfRangeException)
+            {
+                // No action is necessary. Playing is stopped without any side effects
+            }
             finally
             {
                 _parent.UpdateData();
@@ -95,8 +104,8 @@ namespace CPAP
             {
                 IDirectoryPicker picker = DependencyService.Get<IDirectoryPicker>();
                 _musicFiles = await picker.GetFilesWithHandles();
-                await Validate();
-                MyListView.ItemsSource = _musicFiles;
+                Validate();
+                SetFiles();
             }
         }
     }

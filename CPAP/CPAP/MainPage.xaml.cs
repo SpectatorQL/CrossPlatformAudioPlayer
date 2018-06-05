@@ -29,7 +29,7 @@ namespace CPAP
             _audioPlayer.CurrentSong = CurrentSong;
         }
 
-        public void EnableButtons()
+        private void EnableButtons()
         {
             if (playButton.IsEnabled)
                 return;
@@ -46,11 +46,23 @@ namespace CPAP
             StartPlaybackTimer();
         }
 
-        public void Reset()
+        private void Reset()
         {
+            DisableButtons();
             _audioPlayer.Stop();
             currentSongName.Text = null;
             currentSongTime.Text = "-:--";
+        }
+        
+        private void DisableButtons()
+        {
+            if (!playButton.IsEnabled)
+                return;
+
+            playButton.IsEnabled = false;
+            previousButton.IsEnabled = false;
+            nextButton.IsEnabled = false;
+            stopButton.IsEnabled = false;
         }
 
         private void StartPlaybackTimer()
@@ -82,19 +94,18 @@ namespace CPAP
         {
             _audioPlayer.Stop();
             _songList.PreviousTrack();
-            Play();
         }
 
         private void nextButton_Clicked(object sender, EventArgs args)
         {
             _audioPlayer.Stop();
             _songList.NextTrack();
-            Play();
         }
 
         private async void songButton_Clicked(object sender, EventArgs args)
         {
             await Navigation.PushAsync(_songList);
+            Reset();
         }
 
         private void volumeSlider_ValueChanged(object sender, EventArgs args)
