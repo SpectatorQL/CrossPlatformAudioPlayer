@@ -8,8 +8,8 @@ namespace CPAP
     {
         public ObservableCollection<MusicFile> GetMusicFiles(string searchDirectory)
         {
-            string[] mp3s = Directory.GetFiles(searchDirectory, "*.mp3", SearchOption.AllDirectories);
-            string[] wavs = Directory.GetFiles(searchDirectory, "*.wav", SearchOption.AllDirectories);
+            string[] mp3s = Directory.GetFiles(searchDirectory, "*.mp3", SearchOption.TopDirectoryOnly);
+            string[] wavs = Directory.GetFiles(searchDirectory, "*.wav", SearchOption.TopDirectoryOnly);
 
             ObservableCollection<MusicFile> files = new ObservableCollection<MusicFile>();
             foreach (var i in mp3s)
