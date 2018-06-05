@@ -95,7 +95,8 @@ namespace CPAP
         }
 
         private async void directoryButton_Clicked(object sender, EventArgs args)
-        {           
+        {
+            _parent.Reset();
             if (Device.RuntimePlatform == Device.Android)
             {
                 await Navigation.PushAsync(new FolderPage(this));

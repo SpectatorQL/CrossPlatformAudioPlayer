@@ -46,7 +46,7 @@ namespace CPAP
             StartPlaybackTimer();
         }
 
-        private void Reset()
+        public void Reset()
         {
             DisableButtons();
             _audioPlayer.Stop();
@@ -105,7 +105,6 @@ namespace CPAP
         private async void songButton_Clicked(object sender, EventArgs args)
         {
             await Navigation.PushAsync(_songList);
-            Reset();
         }
 
         private void volumeSlider_ValueChanged(object sender, EventArgs args)
