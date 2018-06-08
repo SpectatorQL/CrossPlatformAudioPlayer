@@ -93,13 +93,13 @@ namespace CPAP
         private void previousButton_Clicked(object sender, EventArgs args)
         {
             _audioPlayer.Stop();
-            _songList.PreviousSong();
+            _songList.ChangeSong(Song.Previous);
         }
 
         private void nextButton_Clicked(object sender, EventArgs args)
         {
             _audioPlayer.Stop();
-            _songList.NextSong();
+            _songList.ChangeSong(Song.Next);
         }
 
         private async void songButton_Clicked(object sender, EventArgs args)

@@ -42,31 +42,13 @@ namespace CPAP
             }
         }
 
-        public void PreviousSong()
+        public void ChangeSong(Song s)
         {
             try
             {
                 int i = _musicFiles.IndexOf(_parent.CurrentSong);
-                MusicFile previous = _musicFiles.ElementAt(i - 1);
-                _parent.CurrentSong = previous;
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                // No action is necessary. Playing is stopped without any side effects
-            }
-            finally
-            {
-                _parent.UpdateData();
-            }
-        }
-
-        public void NextSong()
-        {
-            try
-            {
-                int i = _musicFiles.IndexOf(_parent.CurrentSong);
-                MusicFile next = _musicFiles.ElementAt(i + 1);
-                _parent.CurrentSong = next;
+                MusicFile f = _musicFiles.ElementAt((int)(i + s));
+                _parent.CurrentSong = f;
             }
             catch (ArgumentOutOfRangeException)
             {
