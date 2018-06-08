@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -27,32 +25,30 @@ namespace CPAP
         public void GetFiles()
         {
             _musicFiles = _fileGetter.GetMusicFiles(MusicFilesDirectory);
-            Validate();
-            SetFiles();
-        }
-
-        private void SetFiles()
-        {
-            MyListView.ItemsSource = _musicFiles;
-            _parent.CurrentSong = _musicFiles.ElementAt(0);
+            SetSongs();
         }
         
-        private async void Validate()
+        private async void SetSongs()
         {
-            if (_musicFiles == null || _musicFiles.Count == 0)
+            MyListView.ItemsSource = _musicFiles;
+            if (_musicFiles.Count == 0 || _musicFiles == null)
             {
                 _parent.CurrentSong = null;
                 await DisplayAlert("No files!", "It looks like you chose a wrong directory.", "OK");
             }
+            else
+            {
+                _parent.CurrentSong = _musicFiles.ElementAt(0);
+            }
         }
 
-        public void PreviousTrack()
+        public void PreviousSong()
         {
             try
             {
                 int i = _musicFiles.IndexOf(_parent.CurrentSong);
-                MusicFile previousTrack = _musicFiles.ElementAt(i - 1);
-                _parent.CurrentSong = previousTrack;
+                MusicFile previous = _musicFiles.ElementAt(i - 1);
+                _parent.CurrentSong = previous;
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -64,13 +60,13 @@ namespace CPAP
             }
         }
 
-        public void NextTrack()
+        public void NextSong()
         {
             try
             {
                 int i = _musicFiles.IndexOf(_parent.CurrentSong);
-                MusicFile nextTrack = _musicFiles.ElementAt(i + 1);
-                _parent.CurrentSong = nextTrack;
+                MusicFile next = _musicFiles.ElementAt(i + 1);
+                _parent.CurrentSong = next;
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -105,8 +101,7 @@ namespace CPAP
             {
                 IDirectoryPicker picker = DependencyService.Get<IDirectoryPicker>();
                 _musicFiles = await picker.GetFilesWithHandles();
-                Validate();
-                SetFiles();
+                SetSongs();
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 
@@ -11,14 +12,14 @@ namespace CPAP
             string[] mp3s = Directory.GetFiles(searchDirectory, "*.mp3", SearchOption.TopDirectoryOnly);
             string[] wavs = Directory.GetFiles(searchDirectory, "*.wav", SearchOption.TopDirectoryOnly);
 
-            ObservableCollection<MusicFile> files = new ObservableCollection<MusicFile>();
-            foreach (var i in mp3s)
+            List<MusicFile> files = new List<MusicFile>();
+            foreach (var file in mp3s)
             {
-                files.Add(new MusicFile(i, Path.GetFileNameWithoutExtension(i)));
+                files.Add(new MusicFile(file, Path.GetFileNameWithoutExtension(file)));
             }
-            foreach (var i in wavs)
+            foreach (var file in wavs)
             {
-                files.Add(new MusicFile(i, Path.GetFileNameWithoutExtension(i)));
+                files.Add(new MusicFile(file, Path.GetFileNameWithoutExtension(file)));
             }
 
             return new ObservableCollection<MusicFile>(files.OrderBy(file => file.Name));
