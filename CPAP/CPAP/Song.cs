@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CPAP
+﻿namespace CPAP
 {
     public enum Song
     {

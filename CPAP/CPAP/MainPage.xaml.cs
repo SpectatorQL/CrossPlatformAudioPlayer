@@ -71,7 +71,7 @@ namespace CPAP
             {
                 if (_audioPlayer.IsPlaying)
                 {
-                    currentSongTime.Text = _audioPlayer.UpdatePlaybackTimer();
+                    currentSongTime.Text = Time.Format(_audioPlayer.CurrentPosition);
                     return true;
                 }
                 else
