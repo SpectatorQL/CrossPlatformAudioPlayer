@@ -16,11 +16,11 @@ namespace CPAP
             _songList = new SongListPage(this);
 
             if (Device.RuntimePlatform == Device.UWP)
-                _audioPlayer = new AudioPlayerUWP();
+                _audioPlayer = new AudioPlayerUWP() { Volume = volumeSlider.Value };
             else if (Device.RuntimePlatform == Device.Android)
-                _audioPlayer = new AudioPlayerAndroid();
+                _audioPlayer = new AudioPlayerAndroid() { Volume = volumeSlider.Value };
             else
-                throw new NotImplementedException();
+                throw new NotImplementedException("Your OS is not yet supported by this app!");
         }
 
         public void UpdateData()
