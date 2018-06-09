@@ -14,10 +14,13 @@ namespace CPAP
         {
             InitializeComponent();
             _songList = new SongListPage(this);
+
             if (Device.RuntimePlatform == Device.UWP)
                 _audioPlayer = new AudioPlayerUWP();
+            else if (Device.RuntimePlatform == Device.Android)
+                _audioPlayer = new AudioPlayerAndroid();
             else
-                _audioPlayer = new AudioPlayer();
+                throw new NotImplementedException();
         }
 
         public void UpdateData()

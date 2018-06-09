@@ -4,7 +4,7 @@ using Plugin.SimpleAudioPlayer;
 
 namespace CPAP
 {
-    class AudioPlayer
+    abstract class AudioPlayer
     {
         protected ISimpleAudioPlayer _player;
         protected bool _isPaused;
@@ -49,7 +49,7 @@ namespace CPAP
 
         protected virtual void LoadAudioFile()
         {
-            using (FileStream audioStream = new FileStream(CurrentSong.Path, FileMode.Open))
+            using (var audioStream = new FileStream(CurrentSong.Path, FileMode.Open))
             {
                 _player.Load(audioStream);
             }
@@ -67,7 +67,7 @@ namespace CPAP
             _isPaused = false;
         }
 
-        protected void OnPlaybackEnded(object sender, EventArgs args)
+        protected virtual void OnPlaybackEnded(object sender, EventArgs args)
         {
             Stop();
         }
