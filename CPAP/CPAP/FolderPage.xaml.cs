@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,23 +7,23 @@ namespace CPAP
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class FolderPage : ContentPage
 	{
+        static string _currentDirectory;
         SongListPage _parent;
         string _defaultDirectory = "/storage/emulated/0";
-        string _currentDirectory;
-        ObservableCollection<string> _localDirectories;       
+        string[] _localDirectories;       
 
         public FolderPage(SongListPage parent)
 		{
 			InitializeComponent();
             _parent = parent;
-            _currentDirectory = _defaultDirectory;
+            _currentDirectory = _currentDirectory ?? _defaultDirectory;
             pathInfo.Text = _currentDirectory;
             GetDirectories();
         }
 
         private void GetDirectories()
         {
-            _localDirectories = new ObservableCollection<string>(System.IO.Directory.GetDirectories(_currentDirectory));
+            _localDirectories = System.IO.Directory.GetDirectories(_currentDirectory);
             Format();
             foldersListView.ItemsSource = _localDirectories;
             pathInfo.Text = _currentDirectory;
@@ -33,7 +31,7 @@ namespace CPAP
 
         private void Format()
         {
-            for (var i = 0; i < _localDirectories.Count; ++i)
+            for (var i = 0; i < _localDirectories.Length; ++i)
             {
                 string[] path = _localDirectories[i].Split('/');
                 _localDirectories[i] = path[path.Length - 1];
