@@ -26,7 +26,8 @@ namespace CPAP
 
         ~MusicFile()
         {
-            FileHandle.DangerousRelease();
+            if (_addRefSuccess)
+                FileHandle.DangerousRelease();
         }
     }
 }
