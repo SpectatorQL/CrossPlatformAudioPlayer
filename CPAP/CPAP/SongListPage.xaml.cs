@@ -82,6 +82,7 @@ namespace CPAP
             {
                 IDirectoryPicker picker = DependencyService.Get<IDirectoryPicker>();
                 _musicFiles = await picker.GetFilesWithHandles();
+                listView.ItemsSource = _musicFiles;
                 SetCurrentSong();
             }
         }
