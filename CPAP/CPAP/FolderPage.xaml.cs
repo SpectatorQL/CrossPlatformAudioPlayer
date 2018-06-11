@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -8,9 +9,8 @@ namespace CPAP
 	public partial class FolderPage : ContentPage
 	{
         static string _currentDirectory;
-        SongListPage _parent;
         string _defaultDirectory = "/storage/emulated/0";
-        string[] _localDirectories;       
+        SongListPage _parent;
 
         public FolderPage(SongListPage parent)
 		{
@@ -22,36 +22,39 @@ namespace CPAP
 
         private void GetDirectories()
         {
-            _localDirectories = System.IO.Directory.GetDirectories(_currentDirectory);
-            Format();
-            foldersListView.ItemsSource = _localDirectories;
+            string[] localDirectories = System.IO.Directory.GetDirectories(_currentDirectory);
+            FormatPaths(localDirectories);
+            foldersListView.ItemsSource = localDirectories;
             pathInfo.Text = _currentDirectory;
         }
 
-        private void Format()
+        private void FormatPaths(string[] directories)
         {
-            for (var i = 0; i < _localDirectories.Length; ++i)
+            for (var i = 0; i < directories.Length; ++i)
             {
-                string[] path = _localDirectories[i].Split('/');
-                _localDirectories[i] = path[path.Length - 1];
+                string[] path = directories[i].Split('/');
+                directories[i] = path[path.Length - 1];
             }
         }
 
         private void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            var listView = sender as ListView;
-            GoToDirectory(listView.SelectedItem.ToString());
-            listView.SelectedItem = null;
+            var tappedDirectory = foldersListView.SelectedItem;
+            GoToDirectory(tappedDirectory.ToString());
+            foldersListView.SelectedItem = null;
         }
 
         private void GoToDirectory(string selectedDirectory)
         {
             string newDirectory;
             if (_currentDirectory != "/")
-                newDirectory = _currentDirectory + "/" + selectedDirectory;               
+            {
+                newDirectory = _currentDirectory + "/" + selectedDirectory;
+            }     
             else
+            {
                 newDirectory = _currentDirectory + selectedDirectory;
-
+            }
             _currentDirectory = newDirectory;
             GetDirectories();         
         }
