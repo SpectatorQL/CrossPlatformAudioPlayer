@@ -17,7 +17,6 @@ namespace CPAP
 			InitializeComponent();
             _parent = parent;
             _currentDirectory = _currentDirectory ?? _defaultDirectory;
-            pathInfo.Text = _currentDirectory;
             GetDirectories();
         }
 
@@ -76,8 +75,7 @@ namespace CPAP
 
         private async void selectButton_Clicked(object sender, EventArgs args)
         {
-            _parent.MusicFilesDirectory = _currentDirectory;
-            _parent.GetFiles();
+            _parent.GetFiles(_currentDirectory);
             await Navigation.PopAsync();
         }
 	}

@@ -11,9 +11,7 @@ namespace CPAP
     {
         MainPage _parent;
         ObservableCollection<MusicFile> _musicFiles;
-        FileGetter _fileGetter;
-
-        public string MusicFilesDirectory { get; set; }    
+        FileGetter _fileGetter; 
 
         public SongListPage(MainPage parent)
         {
@@ -22,15 +20,15 @@ namespace CPAP
             _fileGetter = new FileGetter();
         }
 
-        public void GetFiles()
+        public void GetFiles(string directory)
         {
-            _musicFiles = _fileGetter.GetMusicFiles(MusicFilesDirectory);
-            SetSongs();
+            _musicFiles = _fileGetter.GetMusicFiles(directory);
+            listView.ItemsSource = _musicFiles;
+            SetCurrentSong();
         }
         
-        private async void SetSongs()
+        private async void SetCurrentSong()
         {
-            MyListView.ItemsSource = _musicFiles;
             if (_musicFiles.Count == 0 || _musicFiles == null)
             {
                 _parent.CurrentSong = null;
@@ -39,6 +37,7 @@ namespace CPAP
             else
             {
                 _parent.CurrentSong = _musicFiles.ElementAt(0);
+                _parent.UpdateData();
             }
         }
 
@@ -65,10 +64,10 @@ namespace CPAP
             if (e.Item == null)
                 return;
 
-            MusicFile song = (MusicFile)MyListView.SelectedItem;
+            MusicFile song = (MusicFile)listView.SelectedItem;
             _parent.CurrentSong = song;
             _parent.UpdateData();
-            MyListView.SelectedItem = null;
+            listView.SelectedItem = null;
             await Navigation.PopAsync();
         }
 
@@ -83,7 +82,7 @@ namespace CPAP
             {
                 IDirectoryPicker picker = DependencyService.Get<IDirectoryPicker>();
                 _musicFiles = await picker.GetFilesWithHandles();
-                SetSongs();
+                SetCurrentSong();
             }
         }
     }

@@ -10,7 +10,7 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <ListView x:Name="MyListView"
+        <ListView x:Name="listView"
                   ItemsSource="{Binding Items}"
                   ItemTapped="Handle_ItemTapped"
                   CachingStrategy="RecycleElement"
